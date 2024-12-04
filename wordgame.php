@@ -1,16 +1,13 @@
 <?php
 session_start();
 
-// Database connection configuration
 $db_host = 'localhost';
 $db_user = 'root';
 $db_pass = 'root';
 $db_name = 'scramble_word';
 
-// Create database connection
 $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -64,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])) {
     exit;
 }
 
-// Handle player name submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player_name'])) {
     $_SESSION['player_name'] = htmlspecialchars(trim($_POST['player_name']));
     header("Location: " . $_SERVER['PHP_SELF']);
@@ -97,7 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['guess'])) {
         if ($_SESSION['currentIndex'] >= count($_SESSION['words'])) {
             $_SESSION['completed'] = true;
             
-            // Save score to database when game is completed
             $stmt = $conn->prepare("INSERT INTO scores (player_name, avatar, score, category) VALUES (?, ?, ?, ?)");
             $stmt->bind_param("ssis", $_SESSION['player_name'], $_SESSION['player_avatar'], $_SESSION['score'], $_SESSION['category']);
             $stmt->execute();
@@ -112,7 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['guess'])) {
             $message = "Incorrect! You have reached the maximum strikes. Your score is: " . $_SESSION['score'];
             $_SESSION['completed'] = true;
             
-            // Save score to database even when game ends due to strikes
             $stmt = $conn->prepare("INSERT INTO scores (player_name, avatar, score, category) VALUES (?, ?, ?, ?)");
             $stmt->bind_param("ssis", $_SESSION['player_name'], $_SESSION['player_avatar'], $_SESSION['score'], $_SESSION['category']);
             $stmt->execute();
@@ -528,7 +522,7 @@ function getLeaderboard($conn) {
             padding: 20px;
             width: 90%;
             max-width: 400px;
-            background-color: #00021d; /* Light background */
+            background-color: #00021d;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
@@ -539,7 +533,7 @@ function getLeaderboard($conn) {
         .name-input-container h2 {
             font-size: 1.5em;
             margin-bottom: 15px;
-            color: white; /* Darker text */
+            color: white;
         }
 
         .name-input-container form {
@@ -568,7 +562,7 @@ function getLeaderboard($conn) {
         }
 
         .name-input-container button:hover {
-            background-color: #0056b3; /* Darker blue */
+            background-color: #0056b3; 
         }
     </style>
 <?php elseif ($_SESSION['category'] == ""): ?>

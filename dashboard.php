@@ -41,7 +41,7 @@ function displayUserRankings($conn, $category = null) {
                 <td>' . $rank++ . '</td>
                 <td>
                     <div class="player-info">
-                        <img src="images/image1.png' . htmlspecialchars($row['avatar']) . '" class="avatar" alt="Player Avatar">
+                        <img src="images/default.png' . htmlspecialchars($row['avatar']) . '" class="avatar" alt="Player Avatar">
                         <span>' . htmlspecialchars($row['player_name']) . '</span>
                     </div>
                 </td>
@@ -55,7 +55,6 @@ function displayUserRankings($conn, $category = null) {
     
     $stmt->close();
 }
-// Modern minimalist styles
 echo '<style>
 .dashboard-container {
     background: #90a4ae;
@@ -164,15 +163,5 @@ echo '<style>
     }
 }
 </style>
-
-<!-- Image Format Guide -->
-<!--
-Avatar Image Requirements:
-1. Create a folder named "avatars" inside your images directory
-2. Image format: jpg, png, or webp
-3. Recommended size: 100x100 pixels
-4. File naming: playername.jpg or player1.jpg
-5. Example path: images/avatars/player1.jpg
--->
 ';
 ?>
